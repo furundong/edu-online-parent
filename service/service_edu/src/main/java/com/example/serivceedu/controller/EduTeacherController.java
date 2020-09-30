@@ -3,10 +3,11 @@ package com.example.serivceedu.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.commonutils.PageResult;
-import com.example.commonutils.R;
-import com.example.serivceedu.entity.EduTeacher;
+import com.example.commonutils.entity.EduTeacher;
+import com.example.commonutils.response.PageResult;
+import com.example.commonutils.response.R;
 import com.example.serivceedu.service.EduTeacherService;
+import com.example.serviceapi.edu.EduTeacherControllerApi;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,11 +18,11 @@ import java.util.List;
  * 讲师(EduTeacher)表控制层
  *
  * @author makejava
- * @since 2020-08-17 09:00:46
+ * @since 2020-09-04 16:02:53
  */
 @RestController
-@RequestMapping("/edu/teacher")
-public class EduTeacherController {
+@RequestMapping("edu/teacher")
+public class EduTeacherController implements EduTeacherControllerApi {
     /**
      * 服务对象
      */
@@ -37,8 +38,18 @@ public class EduTeacherController {
      */
     @GetMapping
     public R selectAll(Page<EduTeacher> page, EduTeacher eduTeacher) {
-        Page<EduTeacher> eduTeacherIPage = this.eduTeacherService.page(page, new QueryWrapper<>(eduTeacher));
-        return R.ok().data(new PageResult<>(eduTeacherIPage.getTotal(),eduTeacherIPage.getRecords()));
+        Page<EduTeacher> entity = this.eduTeacherService.page(page, new QueryWrapper<>(eduTeacher));
+        return R.ok().data(new PageResult<>(entity.getTotal(), entity.getRecords()));
+    }
+
+    /**
+     * 分页查询所有数据
+     *
+     * @return 所有数据
+     */
+    @GetMapping("findAll")
+    public R selectAllNoPage() {
+        return R.ok().data(this.eduTeacherService.list());
     }
 
     /**
@@ -49,8 +60,8 @@ public class EduTeacherController {
      */
     @GetMapping("{id}")
     public R selectOne(@PathVariable Serializable id) {
-        EduTeacher teacherServiceById = this.eduTeacherService.getById(id);
-        return R.ok().data(teacherServiceById);
+        EduTeacher entityById = this.eduTeacherService.getById(id);
+        return R.ok().data(entityById);
     }
 
     /**
@@ -77,6 +88,12 @@ public class EduTeacherController {
         return R.ok();
     }
 
+    /**
+     * 删除数据单条数据
+     *
+     * @param id 主键
+     * @return 删除结果
+     */
     @DeleteMapping("{id}")
     public R deleteById(@PathVariable("id") String id) {
         this.eduTeacherService.removeById(id);

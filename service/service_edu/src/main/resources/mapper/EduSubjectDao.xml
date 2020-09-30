@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.serivceedu.dao.EduSubjectDao">
 
-    <resultMap type="com.example.serivceedu.entity.EduSubject" id="EduSubjectMap">
+    <resultMap type="com.example.commonutils.entity.EduSubject" id="EduSubjectMap">
         <result property="id" column="id" jdbcType="VARCHAR"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="parentId" column="parent_id" jdbcType="VARCHAR"/>
@@ -10,5 +10,15 @@
         <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
         <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
     </resultMap>
+    
+    <resultMap id="subjectNestedVo" type="com.example.commonutils.entity.vo.SubjectNestedVo" extends="EduSubjectMap">
+        <collection property="children" ofType="com.example.commonutils.entity.vo.SubjectVo">
+            <id property="id" column="id2"/>
+            <result property="title" column="title2"/>
+        </collection>
+    </resultMap>
 
+    <select id="selectSqlNestedTwoLevel" resultMap="subjectNestedVo">
+    SELECT e1.id,e1.title,e2.id as id2,e2.title as title2 FROM edu_subject e1 JOIN edu_subject e2 on e1.id = e2.parent_id ORDER BY e1.sort
+    </select>
 </mapper>

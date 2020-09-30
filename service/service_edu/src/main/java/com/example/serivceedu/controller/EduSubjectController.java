@@ -3,11 +3,14 @@ package com.example.serivceedu.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.commonutils.PageResult;
-import com.example.commonutils.R;
-import com.example.serivceedu.entity.EduSubject;
+import com.example.commonutils.response.PageResult;
+import com.example.commonutils.response.R;
+import com.example.commonutils.entity.EduSubject;
+import com.example.commonutils.entity.vo.SubjectNestedVo;
 import com.example.serivceedu.service.EduSubjectService;
+import com.example.serviceapi.edu.EduSubjectControllerApi;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -20,8 +23,8 @@ import java.util.List;
  * @since 2020-09-03 15:06:59
  */
 @RestController
-@RequestMapping("eduSubject")
-public class EduSubjectController {
+@RequestMapping("edu/subject")
+public class EduSubjectController implements EduSubjectControllerApi {
     /**
      * 服务对象
      */
@@ -48,9 +51,38 @@ public class EduSubjectController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public R selectOne(@PathVariable Serializable id) {
+    public R selectOne(@PathVariable("id") Serializable id) {
         EduSubject entityById = this.eduSubjectService.getById(id);
         return R.ok().data(entityById);
+    }
+
+    @GetMapping("nestedList")
+    public R nestedList(){
+//        List<SubjectNestedVo> subjectNestedVoList = eduSubjectService.nestedList();
+        List<SubjectNestedVo> subjectNestedVoList = eduSubjectService.selectSqlNestedTwoLevel();
+        return R.ok().data(subjectNestedVoList);
+    }
+
+    /**
+     * 文件新增数据
+     *
+     */
+    @PostMapping("upload")
+    public R upload(MultipartFile file) {
+        //1 获取上传的excel文件 MultipartFile
+        //这里使用easyExcel，那么监听器中的service不能通过spring注入.
+        eduSubjectService.importSubjectData(file,eduSubjectService);
+        //判断返回集合是否为空
+        return R.ok();
+    }
+
+    /**
+     * 将最新的课程数据上传到oss
+     */
+    @GetMapping("latestSubjectUpdate")
+    public R eduSubjectService(){
+        eduSubjectService.eduSubjectService();
+        return R.ok().message("已更新至最新");
     }
 
     /**

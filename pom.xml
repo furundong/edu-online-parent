@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>online-edu-parent</artifactId>
+    <artifactId>online-com.example.serviceapi.edu-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>online-edu-parent</name>
+    <name>online-com.example.serviceapi.edu-parent</name>
     <packaging>pom</packaging>
     <description>Demo project for Spring Boot</description>
 
@@ -196,7 +196,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <build>
         <plugins>
             <plugin>

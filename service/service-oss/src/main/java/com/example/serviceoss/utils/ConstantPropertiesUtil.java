@@ -20,7 +20,7 @@ public class ConstantPropertiesUtil implements InitializingBean {
     @Value("${aliyun.oss.file.keysecret}")
     private String keySecret;
 
-//    @Value("${aliyun.oss.file.filehost}")
+//    @Value("${aliyun.com.example.serviceapi.oss.file.filehost}")
 //    private String fileHost;
 
     @Value("${aliyun.oss.file.bucketname}")

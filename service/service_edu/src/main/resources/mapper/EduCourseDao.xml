@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.serivceedu.dao.EduCourseDao">
+
+    <resultMap type="com.example.commonutils.entity.EduCourse" id="EduCourseMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="teacherId" column="teacher_id" jdbcType="VARCHAR"/>
+        <result property="subjectId" column="subject_id" jdbcType="VARCHAR"/>
+        <result property="subjectParentId" column="subject_parent_id" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="OTHER"/>
+        <result property="lessonNum" column="lesson_num" jdbcType="INTEGER"/>
+        <result property="cover" column="cover" jdbcType="VARCHAR"/>
+        <result property="buyCount" column="buy_count" jdbcType="OTHER"/>
+        <result property="viewCount" column="view_count" jdbcType="OTHER"/>
+        <result property="version" column="version" jdbcType="OTHER"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="BOOLEAN"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="selectCoursePublishVoById" resultType="com.example.commonutils.entity.vo.CoursePublishVo">
+        SELECT
+        c.title,
+        c.cover,
+        c.lesson_num AS lessonNum,
+        CONVERT(c.price, DECIMAL(8,2)) AS price,
+        s1.title AS subjectLevelOne,
+        s2.title AS subjectLevelTwo,
+        t.name AS teacherName
+    FROM
+        edu_course c
+        LEFT JOIN edu_teacher t ON c.teacher_id = t.id
+        LEFT JOIN edu_subject s1 ON c.subject_parent_id = s1.id
+        LEFT JOIN edu_subject s2 ON c.subject_id = s2.id
+    WHERE
+        c.id = #{id}
+    </select>
+
+</mapper>

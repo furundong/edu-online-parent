@@ -17,13 +17,13 @@ import java.io.FileNotFoundException;
 @SpringBootTest
 public class OssApplicationTest {
 
+    String endpoint = "oss-cn-beijing.aliyuncs.com";
+    String accessKeyId = "LTAI4G5gkWAUPZq591rJmpzg";
+    String accessKeySecret = "527BL0bxHy37B4KO34T37QvBi9Fac4";
+    String bucketName ="freedom98";
 
     @Test
-    public void me() throws FileNotFoundException {
-        String endpoint = "oss-cn-beijing.aliyuncs.com";
-        String accessKeyId = "LTAI4G5gkWAUPZq591rJmpzg";
-        String accessKeySecret = "527BL0bxHy37B4KO34T37QvBi9Fac4";
-        String bucketName ="freedom98";
+    public void upload() throws FileNotFoundException {
 
 // <yourObjectName>上传文件到OSS时需要指定包含文件后缀在内的完整路径，例如abc/efg/123.jpg。
         String objectName = "a.jpg";
@@ -37,5 +37,25 @@ public class OssApplicationTest {
 
 // 关闭OSSClient。
         ossClient.shutdown();
+    }
+
+    @Test
+    public void delete(){
+        // 创建OSSClient实例。
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+
+// 删除文件。如需删除文件夹，请将ObjectName设置为对应的文件夹名称。如果文件夹非空，则需要将文件夹下的所有object删除后才能删除该文件夹。
+        String s1 = "2020/09/02/4eabd6d1129f4981be57120702dca397file.png";
+        ossClient.deleteObject(bucketName, s1);
+
+// 关闭OSSClient。
+        ossClient.shutdown();
+    }
+
+    @Test
+    public void strSub(){
+        String s = "https://freedom98.oss-cn-beijing.aliyuncs.com/2020/09/09/311cf2f7ef6645d5a1e3dbb0bb001d81default.jpg";
+        String substring = s.substring(s.indexOf(endpoint));
+        System.out.println("substring = " + substring);
     }
 }

@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>online-edu-parent</artifactId>
+        <artifactId>online-com.example.serviceapi.edu-parent</artifactId>
         <groupId>com.example</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -12,31 +12,33 @@
     <modules>
         <module>service_edu</module>
         <module>service-oss</module>
+        <module>service-api</module>
+        <module>service-vod</module>
+        <module>service-cms</module>
+        <module>service-msm</module>
+        <module>service-ucenter</module>
     </modules>
     <artifactId>service</artifactId>
 
     <dependencies>
-        <!--<dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-        </dependency>
-
-        &lt;!&ndash;hystrix依赖，主要是用  @HystrixCommand &ndash;&gt;
+<!--        服务调用-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-
-        &lt;!&ndash;服务注册&ndash;&gt;
+<!--        服务注册-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-        &lt;!&ndash;服务调用&ndash;&gt;
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>-->
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.example</groupId>
