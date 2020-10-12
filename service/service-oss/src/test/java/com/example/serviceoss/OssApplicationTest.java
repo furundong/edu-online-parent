@@ -17,10 +17,10 @@ import java.io.FileNotFoundException;
 @SpringBootTest
 public class OssApplicationTest {
 
-    String endpoint = "oss-cn-beijing.aliyuncs.com";
-    String accessKeyId = "LTAI4G5gkWAUPZq591rJmpzg";
-    String accessKeySecret = "527BL0bxHy37B4KO34T37QvBi9Fac4";
-    String bucketName ="freedom98";
+    String endpoint = "1";
+    String accessKeyId = "1";
+    String accessKeySecret = "1";
+    String bucketName ="1";
 
     @Test
     public void upload() throws FileNotFoundException {

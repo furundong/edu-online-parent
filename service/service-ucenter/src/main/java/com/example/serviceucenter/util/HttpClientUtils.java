@@ -255,14 +255,14 @@ public class HttpClientUtils {
     /**
      * 从 response 里获取 charset
      *
-     * @param ressponse
+     * @param response
      * @return
      */
     @SuppressWarnings("unused")
-    private static String getCharsetFromResponse(HttpResponse ressponse) {
+    private static String getCharsetFromResponse(HttpResponse response) {
         // Content-Type:text/html; charset=GBK
-        if (ressponse.getEntity() != null  && ressponse.getEntity().getContentType() != null && ressponse.getEntity().getContentType().getValue() != null) {
-            String contentType = ressponse.getEntity().getContentType().getValue();
+        if (response.getEntity() != null  && response.getEntity().getContentType() != null && response.getEntity().getContentType().getValue() != null) {
+            String contentType = response.getEntity().getContentType().getValue();
             if (contentType.contains("charset=")) {
                 return contentType.substring(contentType.indexOf("charset=") + 8);
             }
@@ -325,14 +325,7 @@ public class HttpClientUtils {
             map.put("page", "222");
             String str= postForm("https://localhost:443/ssl/test.shtml",map,null, 10000, 10000);*/
             System.out.println(str);
-        } catch (ConnectTimeoutException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (SocketTimeoutException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
