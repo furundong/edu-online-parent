@@ -3,7 +3,6 @@ package com.example.servicemsm.controller;
 import com.example.commonutils.response.R;
 import com.example.commonutils.utils.RandomUtil;
 import com.example.servicemsm.service.MsmService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +25,7 @@ public class MsmApiController {
     @Resource
     private MsmService msmService;
 
-    @Autowired
+    @Resource
     private RedisTemplate<String, String> redisTemplate;
 
     @GetMapping(value = "/send/{phone}")

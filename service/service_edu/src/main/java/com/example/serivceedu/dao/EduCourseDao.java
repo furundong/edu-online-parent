@@ -3,6 +3,7 @@ package com.example.serivceedu.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.commonutils.entity.EduCourse;
 import com.example.commonutils.entity.vo.CoursePublishVo;
+import com.example.commonutils.entity.vo.CourseWebVo;
 
 /**
  * 课程(EduCourse)表数据库访问层
@@ -12,4 +13,6 @@ import com.example.commonutils.entity.vo.CoursePublishVo;
  */
 public interface EduCourseDao extends BaseMapper<EduCourse> {
     CoursePublishVo selectCoursePublishVoById(String id);
+
+    CourseWebVo selectInfoWebById(String id);
 }

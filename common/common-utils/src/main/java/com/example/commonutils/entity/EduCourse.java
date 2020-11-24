@@ -46,11 +46,11 @@ public class EduCourse extends Model<EduCourse> {
     //课程封面图片路径
     private String cover;
     //销售数量
-    private Object buyCount;
+    private Long buyCount;
     //浏览数量
-    private Object viewCount;
+    private Long viewCount;
     //乐观锁
-    private Object version;
+    private Long version;
     //课程状态 Draft未发布  Normal已发布
     private String status;
     //逻辑删除 1（true）已删除， 0（false）未删除
@@ -125,30 +125,6 @@ public class EduCourse extends Model<EduCourse> {
 
     public void setCover(String cover) {
         this.cover = cover;
-    }
-
-    public Object getBuyCount() {
-        return buyCount;
-    }
-
-    public void setBuyCount(Object buyCount) {
-        this.buyCount = buyCount;
-    }
-
-    public Object getViewCount() {
-        return viewCount;
-    }
-
-    public void setViewCount(Object viewCount) {
-        this.viewCount = viewCount;
-    }
-
-    public Object getVersion() {
-        return version;
-    }
-
-    public void setVersion(Object version) {
-        this.version = version;
     }
 
     public String getStatus() {

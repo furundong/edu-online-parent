@@ -31,6 +31,18 @@ public class UcenterMemberController {
     @Resource
     private UcenterMemberService memberService;
 
+    /**
+     * 服务对象
+     */
+    @Resource
+    private UcenterMemberService ucenterMemberService;
+
+
+    /**
+     * 登录
+     * @param loginVo loginVo
+     * @return R
+     */
     @PostMapping("login")
     public R login(@RequestBody LoginVo loginVo) {
         String token = memberService.login(loginVo);
@@ -60,11 +72,11 @@ public class UcenterMemberController {
         }
     }
 
-    /**
-     * 服务对象
-     */
-    @Resource
-    private UcenterMemberService ucenterMemberService;
+    //根据用户id获取用户信息
+    @GetMapping("getInfoUc")
+    public UcenterMember getInfoUc(String id) {
+        return memberService.getById(id);
+    }
 
     /**
      * 分页查询所有数据

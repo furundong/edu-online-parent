@@ -29,6 +29,7 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberDao, Ucen
 
     /**
      * 会员登录
+     *
      * @param loginVo
      * @return
      */
@@ -38,25 +39,25 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberDao, Ucen
         String password = loginVo.getPassword();
 
         //校验参数
-        if(StringUtils.isEmpty(mobile) ||
+        if (StringUtils.isEmpty(mobile) ||
                 StringUtils.isEmpty(password)) {
-            throw new GuliException(false,20001,"error");
+            throw new GuliException(false, 20001, "error");
         }
 
         //获取会员
         UcenterMember member = baseMapper.selectOne(new QueryWrapper<UcenterMember>().eq("mobile", mobile));
-        if(null == member) {
-            throw new GuliException(false,20001,"该电话不存在");
+        if (null == member) {
+            throw new GuliException(false, 20001, "该电话不存在");
         }
 
         //校验密码
-        if(!MD5.encrypt(password).equals(member.getPassword())) {
-            throw new GuliException(false,20001,"账号或密码错误");
+        if (!MD5.encrypt(password).equals(member.getPassword())) {
+            throw new GuliException(false, 20001, "账号或密码错误");
         }
 
         //校验是否被禁用
-        if(member.getIsDisabled()) {
-            throw new GuliException(false,20001,"校验是否被禁用");
+        if (member.getIsDisabled()) {
+            throw new GuliException(false, 20001, "校验是否被禁用");
         }
 
         //使用JWT生成token字符串
@@ -65,6 +66,7 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberDao, Ucen
 
     /**
      * 会员注册
+     *
      * @param registerVo
      */
     @Override
@@ -76,25 +78,29 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberDao, Ucen
         String code = registerVo.getCode();
 
         //校验参数
-        if(StringUtils.isEmpty(mobile) ||
+        if (StringUtils.isEmpty(mobile) ||
                 StringUtils.isEmpty(password) ||
                 StringUtils.isEmpty(code)) {
-            throw new GuliException(false,20001,"error");
+            throw new GuliException(false, 20001, "error");
         }
 
         //先发送验证码，这里就检验
 
         //校验校验验证码
         //从redis获取发送的验证码
-        String mobleCode = redisTemplate.opsForValue().get(mobile);
-        if(!code.equals(mobleCode)) {
-            throw new GuliException(false,20001,"验证码已经失效，请重新发送");
+        String mobileCode = redisTemplate.opsForValue().get(mobile);
+        if(StringUtils.isEmpty(mobileCode)){
+            throw new GuliException(false, 20001, "验证码已经失效，请重新发送");
+        }
+        mobileCode = mobileCode.substring(1, mobileCode.length() - 1);
+        if (!code.equals(mobileCode)) {
+            throw new GuliException(false, 20001, "验证码已经失效，请重新发送");
         }
 
         //查询数据库中是否存在相同的手机号码
         Integer count = baseMapper.selectCount(new QueryWrapper<UcenterMember>().eq("mobile", mobile));
-        if(count > 0) {
-            throw new GuliException(false,20001,"手机号码已被注册");
+        if (count > 0) {
+            throw new GuliException(false, 20001, "手机号码已被注册");
         }
 
         //添加注册信息到数据库

@@ -33,8 +33,8 @@ public class WxApiController {
     public String callback(String code, String state){
 
         //得到授权临时票据code
-        System.out.println("code = " + code);
-        System.out.println("state = " + state);
+//        System.out.println("code = " + code);
+//        System.out.println("state = " + state);
 
         //从redis中将state获取出来，和当前传入的state作比较
         //如果一致则放行，如果不一致则抛出异常：非法访问， 这个是防rscf的，但是这里不做。浪费时间
@@ -122,7 +122,7 @@ public class WxApiController {
         }
         // 生成jwt
         String token = JwtUtils.getJwtToken(member.getId(),member.getNickname());
-            return "redirect:http://localhost:3000?token="+token;
+            return "redirect:http://172.20.10.10:80/?token="+token;//前端位置。 这个token是给前端的东西
     }
 
     /**

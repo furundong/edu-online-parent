@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.serviceorder.dao.TOrderDao">
+
+    <resultMap type="com.example.commonutils.entity.TOrder" id="TOrderMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="orderNo" column="order_no" jdbcType="VARCHAR"/>
+        <result property="courseId" column="course_id" jdbcType="VARCHAR"/>
+        <result property="courseTitle" column="course_title" jdbcType="VARCHAR"/>
+        <result property="courseCover" column="course_cover" jdbcType="VARCHAR"/>
+        <result property="teacherName" column="teacher_name" jdbcType="VARCHAR"/>
+        <result property="memberId" column="member_id" jdbcType="VARCHAR"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+        <result property="totalFee" column="total_fee" jdbcType="OTHER"/>
+        <result property="payType" column="pay_type" jdbcType="BOOLEAN"/>
+        <result property="status" column="status" jdbcType="BOOLEAN"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+</mapper>

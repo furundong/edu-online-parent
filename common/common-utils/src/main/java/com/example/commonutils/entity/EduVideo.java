@@ -39,6 +39,8 @@ public class EduVideo extends Model<EduVideo> {
     private String videoSourceId;
     //原始文件名称
     private String videoOriginalName;
+    //云端视频封面
+    private String videoCoverUrl;
     //排序字段
     private Integer sort;
     //播放次数

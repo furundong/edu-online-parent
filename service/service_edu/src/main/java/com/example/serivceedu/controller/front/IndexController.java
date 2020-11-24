@@ -1,4 +1,4 @@
-package com.example.serivceedu.controller;
+package com.example.serivceedu.controller.front;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.commonutils.entity.EduCourse;

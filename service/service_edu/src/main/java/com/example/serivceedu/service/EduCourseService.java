@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.commonutils.entity.EduCourse;
 import com.example.commonutils.entity.dto.CourseInfoForm;
 import com.example.commonutils.entity.vo.CoursePublishVo;
+import com.example.commonutils.entity.vo.CourseWebVo;
 
 /**
  * 课程(EduCourse)表服务接口
@@ -22,4 +23,12 @@ public interface EduCourseService extends IService<EduCourse> {
     CoursePublishVo getCoursePublishVoById(String id);
 
     boolean publishCourseById(String id); //发布课程。修改状态COURSE_NORMAL
+
+    CourseWebVo selectInfoWebById(String courseId);
+
+    /**
+     * 更新课程浏览数
+     * @param id
+     */
+    void updatePageViewCount(String id);
 }

@@ -3,15 +3,18 @@ package com.example.serivceedu.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.commonutils.entity.EduCourse;
 import com.example.commonutils.entity.EduTeacher;
 import com.example.commonutils.response.PageResult;
 import com.example.commonutils.response.R;
+import com.example.serivceedu.service.EduCourseService;
 import com.example.serivceedu.service.EduTeacherService;
 import com.example.serviceapi.edu.EduTeacherControllerApi;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -28,6 +31,9 @@ public class EduTeacherController implements EduTeacherControllerApi {
      */
     @Resource
     private EduTeacherService eduTeacherService;
+
+    @Resource
+    private EduCourseService eduCourseService;
 
     /**
      * 分页查询所有数据
@@ -65,6 +71,30 @@ public class EduTeacherController implements EduTeacherControllerApi {
     }
 
     /**
+     * 通过主键查询联合数据
+     *
+     * @param teacherId 主键
+     * @return 单条数据
+     */
+    @GetMapping("/teacherAndCourses/{teacherId}")
+    public R teacherAndCourses(@PathVariable Serializable teacherId) {
+        EduTeacher entityById = this.eduTeacherService.getById(teacherId);
+
+        //根据讲师id查询这个讲师的课程列表
+        final QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+        wrapper.eq("teacher_id",teacherId);
+        //按照最后更新时间倒序排列
+        wrapper.orderByDesc("gmt_modified");
+        final List<EduCourse> eduCourses = eduCourseService.list(wrapper);
+
+        //结果返回
+        final HashMap<String, Object> map = new HashMap<>();
+        map.put("teacher",entityById);
+        map.put("courseList",eduCourses);
+        return R.ok().data(map);
+    }
+
+    /**
      * 新增数据
      *
      * @param eduTeacher 实体对象
@@ -94,8 +124,8 @@ public class EduTeacherController implements EduTeacherControllerApi {
      * @param id 主键
      * @return 删除结果
      */
-    @DeleteMapping("{id}")
-    public R deleteById(@PathVariable("id") String id) {
+    @DeleteMapping("{teacherId}")
+    public R deleteById(@PathVariable("teacherId") String id) {
         this.eduTeacherService.removeById(id);
         return R.ok();
     }

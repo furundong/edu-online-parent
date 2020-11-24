@@ -5,25 +5,9 @@ package com.example.serivceedu;
  */
 public class ServiceEduTest {
     public static void main(String[] args) {
-        A a = new A();
-        a.name = "freedom";
-        System.out.println("a = " + a);
-        change(a);
-        System.out.println("a = " + a);
+        String mobileCode = "1kkkkk1";
+        mobileCode = mobileCode.substring(1, mobileCode.length() - 1);
+        System.out.println("mobileCode = " + mobileCode);
+    }
     }
 
-    private static void change(A a) {
-        a.name = "222“”";
-    }
-}
-
-class A{
-    String name;
-
-    @Override
-    public String toString() {
-        return "A{" +
-                "name='" + name + '\'' +
-                '}';
-    }
-}

@@ -5,6 +5,7 @@ import com.example.commonutils.entity.EduCourse;
 import com.example.commonutils.entity.EduCourseDescription;
 import com.example.commonutils.entity.dto.CourseInfoForm;
 import com.example.commonutils.entity.vo.CoursePublishVo;
+import com.example.commonutils.entity.vo.CourseWebVo;
 import com.example.commonutils.response.ResultCodeEnum;
 import com.example.serivceedu.client.OssClient;
 import com.example.serivceedu.dao.EduCourseDao;
@@ -116,6 +117,19 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseDao, EduCourse> i
         course.setStatus(EduCourse.COURSE_NORMAL);
         int count = baseMapper.updateById(course);
         return count > 0;
+    }
+
+    @Override
+    public CourseWebVo selectInfoWebById(String id) {
+        this.updatePageViewCount(id);
+        return baseMapper.selectInfoWebById(id);
+    }
+
+    @Override
+    public void updatePageViewCount(String id) {
+        EduCourse course = baseMapper.selectById(id);
+        course.setViewCount(course.getViewCount() + 1);
+        baseMapper.updateById(course);
     }
 
     @Override
