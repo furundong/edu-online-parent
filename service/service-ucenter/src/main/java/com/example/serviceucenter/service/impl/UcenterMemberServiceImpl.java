@@ -15,6 +15,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+
 /**
  * 会员表(UcenterMember)表服务实现类
  *
@@ -116,5 +119,20 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberDao, Ucen
     @Override
     public UcenterMember getLoginVo(String memberId) {
         return baseMapper.selectById(memberId);
+    }
+
+    @Override
+    public Integer countRegisterByDay(Timestamp day) {
+        QueryWrapper<UcenterMember> wrapper = new QueryWrapper<>();
+        wrapper.select();
+        wrapper.ge("gmt_create",day);
+        int dayOfMonth = day.getDate()+1;
+        Calendar instance = Calendar.getInstance();
+        instance.set(Calendar.HOUR_OF_DAY, 0);
+        instance.set(Calendar.MINUTE, 0);
+        instance.set(Calendar.SECOND, 0);
+        instance.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+        wrapper.le("gmt_create",instance.getTime());
+        return  baseMapper.selectCount(wrapper);
     }
 }

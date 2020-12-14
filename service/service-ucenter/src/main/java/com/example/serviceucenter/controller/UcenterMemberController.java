@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -76,6 +80,14 @@ public class UcenterMemberController {
     @GetMapping("getInfoUc")
     public UcenterMember getInfoUc(String id) {
         return memberService.getById(id);
+    }
+
+    @GetMapping(value = "countRegister")
+    public R registerCount(String day) throws ParseException {
+        Date parse = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(day);
+        Timestamp timestamp = new Timestamp(parse.getTime());
+        Integer count = memberService.countRegisterByDay(timestamp);
+        return R.ok().data(count);
     }
 
     /**

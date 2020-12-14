@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.serviceacl.dao.AclPermissionDao">
+
+    <resultMap type="com.example.commonutils.entity.AclPermission" id="AclPermissionMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="pid" column="pid" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="BOOLEAN"/>
+        <result property="permissionValue" column="permission_value" jdbcType="VARCHAR"/>
+        <result property="path" column="path" jdbcType="VARCHAR"/>
+        <result property="component" column="component" jdbcType="VARCHAR"/>
+        <result property="icon" column="icon" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="BOOLEAN"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        p.id,p.pid,p.name,p.type,p.permission_value,path,p.component,p.icon,p.status,p.is_deleted,p.gmt_create,p.gmt_modified
+    </sql>
+
+
+    <select id="selectAllPermissionValue" resultType="java.lang.String">
+        select
+        permission_value
+        from acl_permission
+        where type = 2
+        and is_deleted = 0
+    </select>
+    <select id="selectPermissionValueByUserId" resultType="java.lang.String">
+        select
+        p.permission_value
+        from acl_user_role ur
+        inner join acl_role_permission rp on rp.role_id = ur.role_id
+        inner join acl_permission p on p.id = rp.permission_id
+        where ur.user_id = #{userId}
+        and p.type = 2
+        and ur.is_deleted = 0
+        and rp.is_deleted = 0
+        and p.is_deleted = 0
+    </select>
+    <select id="selectPermissionByUserId" resultType="com.example.commonutils.entity.AclPermission">
+        select
+        <include refid="columns" />
+        from acl_user_role ur
+        inner join acl_role_permission rp on rp.role_id = ur.role_id
+        inner join acl_permission p on p.id = rp.permission_id
+        where ur.user_id = #{userId}
+        and ur.is_deleted = 0
+        and rp.is_deleted = 0
+        and p.is_deleted = 0
+    </select>
+
+</mapper>
